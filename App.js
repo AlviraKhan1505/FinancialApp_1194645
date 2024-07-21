@@ -1,20 +1,61 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TransactionsList from './screens/TransactionsList';
+import TransactionDetail from './screens/TransactionDetail';
+import Summary from './screens/Summary';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { TransactionsProvider } from './context/TransactionsContext';
 
-export default function App() {
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function TransactionsStack() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="TransactionsList"
+        component={TransactionsList}
+        options={{ headerShown: true, title:'Transactions' }}
+      />
+      <Stack.Screen
+        name="TransactionDetail"
+        component={TransactionDetail}
+        options={{ headerShown: true, title: 'Transaction Detail' }}
+      />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function App() {
+  return (
+    <TransactionsProvider>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Transactions"
+            component={TransactionsStack}
+            options={{headerShown: false,
+              tabBarIcon: ({ color, size , }) => (
+                <Icon name="list" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Summary"
+            component={Summary}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="analytics" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </TransactionsProvider>
+  );
+}
+
+export default App;
