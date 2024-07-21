@@ -18,7 +18,7 @@ function TransactionsStack() {
       <Stack.Screen
         name="TransactionsList"
         component={TransactionsList}
-        options={{ headerShown: true, title:'Transactions' }}
+        options={{ headerShown: true, title: 'Transactions' }}
       />
       <Stack.Screen
         name="TransactionDetail"
@@ -33,12 +33,18 @@ function App() {
   return (
     <TransactionsProvider>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={{
+            tabBarActiveTintColor: '#4CAF50', 
+            tabBarInactiveTintColor: '#888', 
+          }}
+        >
           <Tab.Screen
             name="Transactions"
             component={TransactionsStack}
-            options={{headerShown: false,
-              tabBarIcon: ({ color, size , }) => (
+            options={{
+              headerShown:false,
+              tabBarIcon: ({ color, size }) => (
                 <Icon name="list" color={color} size={size} />
               ),
             }}

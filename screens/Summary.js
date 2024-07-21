@@ -1,6 +1,5 @@
-// In screens/Summary.js
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TransactionsContext } from '../context/TransactionsContext';
 
 const Summary = () => {
@@ -13,30 +12,89 @@ const Summary = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Summary</Text>
-      <Text style={styles.summaryText}>Number of Transactions: {totalTransactions}</Text>
-      <Text style={styles.summaryText}>Total Amount: ${totalAmount}</Text>
-      <Text style={styles.summaryText}>Highest Transaction: {highestTransaction.name} (${highestTransaction.amount})</Text>
-      <Text style={styles.summaryText}>Lowest Transaction: {lowestTransaction.name} (${lowestTransaction.amount})</Text>
+      <View style={styles.topSection}>
+        <Text style={styles.totalAmount}>${totalAmount.toFixed(2)}</Text>
+        <Text style={styles.totalTransactions}>Number of Transactions: {totalTransactions}</Text>
+      </View>
+      <View style={styles.detailsSection}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Highest Transaction</Text>
+          <Text style={styles.cardAmount}>${highestTransaction.amount.toFixed(2)}</Text>
+          <Text style={styles.cardDetail}>Name: {highestTransaction.name}</Text>
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Lowest Transaction</Text>
+          <Text style={styles.cardAmount}>${lowestTransaction.amount.toFixed(2)}</Text>
+          <Text style={styles.cardDetail}>Name: {lowestTransaction.name}</Text>
+        </View>
+      </View>
     </View>
   );
 };
 
+const { height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  topSection: {
+    height: height * 0.25,
+    backgroundColor: '#4CAF50', // Green background
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 16,
+    borderRadius: 10,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5, // Android shadow
   },
-  summaryText: {
-    fontSize: 18,
+  totalAmount: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  totalTransactions: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: '#fff',
+    marginTop: 8,
+  },
+  detailsSection: {
+    flex: 1,
+    //padding: 16,
+  },
+  card: {
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 10,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3, // Android shadow
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
     marginBottom: 8,
+  },
+  cardAmount: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#4CAF50',
+    marginBottom: 4,
+  },
+  cardDetail: {
+    fontSize: 18,
+    color: '#555',
   },
 });
 

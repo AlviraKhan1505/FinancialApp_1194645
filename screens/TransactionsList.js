@@ -7,16 +7,21 @@ const TransactionsList = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>List</Text>
+      <Text style={styles.header}>Transactions List</Text>
       <FlatList
         data={transactions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('TransactionDetail', { transaction: item })}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('TransactionDetail', { transaction: item })}
+            style={styles.itemContainer}
+          >
             <View style={styles.item}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.amount}>${item.amount}</Text>
-              <Text style={styles.date}>{item.date}</Text>
+              <View style={styles.row}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.date}>{item.date}</Text>
+              </View>
+              <Text style={styles.amount}>${item.amount.toFixed(2)}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -28,28 +33,44 @@ const TransactionsList = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5', 
     padding: 16,
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#4CAF50', 
     marginBottom: 16,
   },
+  itemContainer: {
+    marginBottom: 12, 
+  },
   item: {
+    backgroundColor: '#fff', 
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderRadius: 10,
+    borderWidth: 1, 
+    borderColor: '#ddd', 
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   name: {
     fontSize: 18,
-  },
-  amount: {
-    fontSize: 16,
-    color: 'green',
+    fontWeight: 'bold',
+    color: '#333',
   },
   date: {
     fontSize: 14,
-    color: 'gray',
+    color: '#555',
+  },
+  amount: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4CAF50', 
+    marginTop: 8, 
   },
 });
 
